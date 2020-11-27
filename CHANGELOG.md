@@ -1,3 +1,9 @@
+# 0.7.0
+
+## Fixes
+
+* DiscordBitset comparing its own content against each other.
+
 # 0.7.0-M2
 
 ## Additions

@@ -39,7 +39,7 @@ class DiscordBitSet(internal var data: LongArray) {
     override fun equals(other: Any?): Boolean {
         if (other !is DiscordBitSet) return false
         for (i in 0 until max(data.size, other.data.size)) {
-            if (getOrZero(i) != getOrZero(i)) return false
+            if (getOrZero(i) != other.getOrZero(i)) return false
         }
         return true
     }
