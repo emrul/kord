@@ -1,3 +1,9 @@
+# 0.7.0
+
+## Additions
+
+* Added `RoleBehavior#asRole`.
+
 # 0.7.0-RC
 
 ## Additions

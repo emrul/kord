@@ -1,11 +1,14 @@
 package dev.kord.core.behavior
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.RoleData
 import dev.kord.core.entity.Entity
+import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Role
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.indexOfFirstOrNull
 import dev.kord.core.sorted
 import dev.kord.core.supplier.EntitySupplier
@@ -89,7 +92,7 @@ interface RoleBehavior : Entity, Strategizable {
 
             override fun hashCode(): Int = Objects.hash(id, guildId)
 
-            override fun equals(other: Any?): Boolean = when(other) {
+            override fun equals(other: Any?): Boolean = when (other) {
                 is RoleBehavior -> other.id == id && other.guildId == guildId
                 else -> false
             }
@@ -119,3 +122,19 @@ suspend inline fun RoleBehavior.edit(builder: RoleModifyBuilder.() -> Unit): Rol
 
     return Role(data, kord)
 }
+
+/**
+ * Requests to get the this behavior as a [Role].
+ *
+ * @throws [RequestException] if anything went wrong during the request.
+ * @throws [EntityNotFoundException] if the role wasn't present.
+ */
+suspend fun RoleBehavior.asRole() = supplier.getRole(guildId, id)
+
+/**
+ * Requests to get this behavior as a [Role],
+ * returns null if the role wasn't present.
+ *
+ * @throws [RequestException] if anything went wrong during the request.
+ */
+suspend fun RoleBehavior.asRoleOrNull() = supplier.getRoleOrNull(guildId, id)
