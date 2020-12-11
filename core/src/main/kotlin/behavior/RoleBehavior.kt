@@ -69,6 +69,23 @@ interface RoleBehavior : Entity, Strategizable {
      */
     suspend fun getPosition(): Int = supplier.getGuildRoles(guildId).sorted().indexOfFirstOrNull { it.id == id }!!
 
+
+    /**
+     * Requests to get the this behavior as a [Role].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the role wasn't present.
+     */
+    suspend fun asRole() = supplier.getRole(guildId, id)
+
+    /**
+     * Requests to get this behavior as a [Role],
+     * returns null if the role wasn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun asRoleOrNull() = supplier.getRoleOrNull(guildId, id)
+
     /**
      * Requests to delete this role.
      *
@@ -122,19 +139,3 @@ suspend inline fun RoleBehavior.edit(builder: RoleModifyBuilder.() -> Unit): Rol
 
     return Role(data, kord)
 }
-
-/**
- * Requests to get the this behavior as a [Role].
- *
- * @throws [RequestException] if anything went wrong during the request.
- * @throws [EntityNotFoundException] if the role wasn't present.
- */
-suspend fun RoleBehavior.asRole() = supplier.getRole(guildId, id)
-
-/**
- * Requests to get this behavior as a [Role],
- * returns null if the role wasn't present.
- *
- * @throws [RequestException] if anything went wrong during the request.
- */
-suspend fun RoleBehavior.asRoleOrNull() = supplier.getRoleOrNull(guildId, id)
