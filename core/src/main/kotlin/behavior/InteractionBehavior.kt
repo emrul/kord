@@ -113,6 +113,6 @@ suspend inline fun InteractionBehavior.respond(
     val data = InteractionApplicationCommandCallbackDataBuilder().apply(builder).build()
     val request = InteractionResponseCreateRequest(type, data.optional())
     kord.rest.interaction.createInteractionResponse(id, token, request)
-    return InteractionResponseBehavior(applicationId, token, kord)
+    return EditableInteractionResponseBehavior(applicationId, token, kord)
 
 }
