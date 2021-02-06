@@ -43,56 +43,56 @@ sealed class BaseApplicationBuilder {
     abstract var options: MutableList<OptionsBuilder>?
 
     @OptIn(ExperimentalContracts::class)
-    fun boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
+    inline fun boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(BooleanBuilder(name, description).apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    fun int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
+    inline fun int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(IntChoiceBuilder(name, description).apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    fun string(name: String, description: String, builder: StringChoiceBuilder.() -> Unit = {}) {
+    inline fun string(name: String, description: String, builder: StringChoiceBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(StringChoiceBuilder(name, description).apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    fun group(name: String, description: String, builder: GroupCommandBuilder.() -> Unit) {
+    inline fun group(name: String, description: String, builder: GroupCommandBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(GroupCommandBuilder(name, description).apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    fun subCommand(name: String, description: String, builder: SubCommandBuilder.() -> Unit = {}) {
+    inline fun subCommand(name: String, description: String, builder: SubCommandBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(SubCommandBuilder(name, description).apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    fun role(name: String, description: String, builder: RoleBuilder.() -> Unit = {}) {
+    inline fun role(name: String, description: String, builder: RoleBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(RoleBuilder(name, description).apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    fun user(name: String, description: String, builder: UserBuilder.() -> Unit = {}) {
+    inline fun user(name: String, description: String, builder: UserBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(UserBuilder(name, description).apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    fun channel(name: String, description: String, builder: ChannelBuilder.() -> Unit = {}) {
+    inline fun channel(name: String, description: String, builder: ChannelBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(ChannelBuilder(name, description).apply(builder))
@@ -133,7 +133,11 @@ class InteractionResponseModifyBuilder :
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    fun embed(builder: EmbedBuilder.() -> Unit) {
+    @OptIn(ExperimentalContracts::class)
+    inline fun embed(builder: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         if (embeds == null) embeds = mutableListOf()
         embeds!! += EmbedBuilder().apply(builder)
     }
@@ -160,7 +164,11 @@ class FollowupMessageModifyBuilder :
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    fun embed(builder: EmbedBuilder.() -> Unit) {
+    @OptIn(ExperimentalContracts::class)
+    inline fun embed(builder: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         if (embeds == null) embeds = mutableListOf()
         embeds!! += EmbedBuilder().apply(builder)
     }
@@ -194,7 +202,11 @@ class InteractionApplicationCommandCallbackDataBuilder {
     private var _flags: Optional<MessageFlags> = Optional.Missing()
     var flags: MessageFlags? by ::_flags.delegate()
 
-    fun embed(builder: EmbedBuilder.() -> Unit) {
+    @OptIn(ExperimentalContracts::class)
+    inline fun embed(builder: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         if (embeds == null) embeds = mutableListOf()
         embeds!! += EmbedBuilder().apply(builder)
     }

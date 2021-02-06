@@ -18,6 +18,9 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 @KordDsl
 class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
@@ -50,7 +53,11 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
      */
     var messageReference: Snowflake? by ::_messageReference.delegate()
 
+    @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        }
         embed = (embed ?: EmbedBuilder()).apply(block)
     }
 
